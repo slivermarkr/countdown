@@ -2,4 +2,6 @@
 
 ## Mini project
 
-- Learn a lot about new Date() Object
+- Live: https://slivermarkr.github.io/countdown/
+
+- Learned a lot about new Date() Object
