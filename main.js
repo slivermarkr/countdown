@@ -37,10 +37,27 @@ let hours = pad(date.getHours());
 let minutes = pad(date.getMinutes());
 let seconds = pad(date.getSeconds());
 
+const newYear = new Date(`January 01, ${date.getFullYear() + 1} `);
+
+let timeDiff = newYear.getTime() - date.getTime();
+let daysRemaining = Math.floor(timeDiff / 8.64e7);
+let hoursRemaining = Math.floor((timeDiff % 8.64e7) / 3.6e6);
+let minutesRemaining = Math.floor(((timeDiff % 8.64e7) % 3.6e6) / 60000);
+let secondsRemaining = Math.floor(
+  (((timeDiff % 8.64e7) % 3.6e6) % 60000) / 1000
+);
+
 updateCurrDate(
   `Today ${
     months[date.getMonth()]
   }. ${date.getDate()}, ${date.getFullYear()} ${hours}:${minutes}:${seconds}`
+);
+
+countDownDiv.innerHTML = updateCountDownDisplay(
+  daysRemaining,
+  hoursRemaining,
+  minutesRemaining,
+  secondsRemaining
 );
 
 setInterval(function updateTime() {
@@ -55,15 +72,12 @@ setInterval(function updateTime() {
     }. ${date.getDate()}, ${date.getFullYear()} ${hours}:${minutes}:${seconds}`
   );
 
-  const newYear = new Date(`January 01, ${date.getFullYear() + 1} `);
+  timeDiff = newYear.getTime() - date.getTime();
+  daysRemaining = Math.floor(timeDiff / 8.64e7);
+  hoursRemaining = Math.floor((timeDiff % 8.64e7) / 3.6e6);
+  minutesRemaining = Math.floor(((timeDiff % 8.64e7) % 3.6e6) / 60000);
+  secondsRemaining = Math.floor((((timeDiff % 8.64e7) % 3.6e6) % 60000) / 1000);
 
-  const timeDiff = newYear.getTime() - date.getTime();
-  const daysRemaining = Math.floor(timeDiff / 8.64e7);
-  const hoursRemaining = Math.floor((timeDiff % 8.64e7) / 3.6e6);
-  const minutesRemaining = Math.floor(((timeDiff % 8.64e7) % 3.6e6) / 60000);
-  const secondsRemaining = Math.floor(
-    (((timeDiff % 8.64e7) % 3.6e6) % 60000) / 1000
-  );
   countDownDiv.textContent = "";
   countDownDiv.innerHTML = updateCountDownDisplay(
     daysRemaining,
