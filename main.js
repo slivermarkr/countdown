@@ -17,6 +17,7 @@ const months = [
   "Dec",
 ];
 
+let intervalId = undefined;
 function updateCurrDate(time) {
   currDateDiv.textContent = time;
 }
@@ -60,7 +61,7 @@ countDownDiv.innerHTML = updateCountDownDisplay(
   secondsRemaining
 );
 
-setInterval(function updateTime() {
+intervalId = setInterval(function updateTime() {
   date = new Date();
   hours = pad(date.getHours());
   minutes = pad(date.getMinutes());
@@ -73,6 +74,18 @@ setInterval(function updateTime() {
   );
 
   timeDiff = newYear.getTime() - date.getTime();
+  //greetings
+  if (timeDiff <= 0) {
+    clearInterval(intervalId);
+    countDownDiv.textContent = "Happy New Year!!!!";
+    setTimeout(() => {
+      const nextYear = new Date(`January 01, ${newYear.getFullYear() + 1}`);
+      newYear.setTime(nextYear.getTime());
+      intervalId = setInterval(updateTime, 1000);
+    }, 100000);
+    return;
+  }
+
   daysRemaining = Math.floor(timeDiff / 8.64e7);
   hoursRemaining = Math.floor((timeDiff % 8.64e7) / 3.6e6);
   minutesRemaining = Math.floor(((timeDiff % 8.64e7) % 3.6e6) / 60000);
